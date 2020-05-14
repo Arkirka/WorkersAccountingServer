@@ -17,8 +17,6 @@ public class ServerUtil {
 
         context.addServlet(new ServletHolder(new AllRequestionServlet()), "/");
 
-
-
         Server server = new Server(8080);
         server.setHandler(context);
 

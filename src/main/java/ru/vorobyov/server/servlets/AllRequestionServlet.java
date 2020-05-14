@@ -1,14 +1,30 @@
 package ru.vorobyov.server.servlets;
 
+import ru.vorobyov.server.templater.PageGenerator;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AllRequestionServlet extends HttpServlet {
 
     public AllRequestionServlet() {
+
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<String, Object> pageVariables = new HashMap<>();
+        pageVariables.put("message", "");
+
+        response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
 
     }
 
