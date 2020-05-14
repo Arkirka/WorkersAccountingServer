@@ -1,6 +1,6 @@
-package ru.vorobyov.dao;
+package ru.vorobyov.database.dao;
 
-import ru.vorobyov.entity.Worker;
+import ru.vorobyov.database.entity.Worker;
 
 import java.sql.SQLException;
 import java.util.List;

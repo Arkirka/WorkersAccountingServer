@@ -1,4 +1,4 @@
-package ru.vorobyov.entity;
+package ru.vorobyov.database.entity;
 
 public class Worker {
     private int workerId;

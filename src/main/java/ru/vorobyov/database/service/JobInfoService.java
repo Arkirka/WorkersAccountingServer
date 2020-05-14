@@ -1,8 +1,8 @@
-package ru.vorobyov.service;
+package ru.vorobyov.database.service;
 
-import ru.vorobyov.bl.Util;
-import ru.vorobyov.dao.JobInfoDAO;
-import ru.vorobyov.entity.JobInfo;
+import ru.vorobyov.database.bl.DatabaseUtil;
+import ru.vorobyov.database.dao.JobInfoDAO;
+import ru.vorobyov.database.entity.JobInfo;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +15,7 @@ public class JobInfoService implements JobInfoDAO {
     Connection connection;
 
     public JobInfoService() throws IOException {
-        connection = Util.getConnection();
+        connection = DatabaseUtil.getConnection();
     }
 
     @Override

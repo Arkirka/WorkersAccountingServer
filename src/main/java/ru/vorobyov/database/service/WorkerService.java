@@ -1,8 +1,8 @@
-package ru.vorobyov.service;
+package ru.vorobyov.database.service;
 
-import ru.vorobyov.bl.Util;
-import ru.vorobyov.dao.WorkerDAO;
-import ru.vorobyov.entity.Worker;
+import ru.vorobyov.database.bl.DatabaseUtil;
+import ru.vorobyov.database.dao.WorkerDAO;
+import ru.vorobyov.database.entity.Worker;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +15,7 @@ public class WorkerService implements WorkerDAO {
     Connection connection;
 
     public WorkerService() throws IOException {
-        connection = Util.getConnection();
+        connection = DatabaseUtil.getConnection();
     }
 
     @Override
