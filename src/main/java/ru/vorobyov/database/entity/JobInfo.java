@@ -3,14 +3,14 @@ package ru.vorobyov.database.entity;
 public class JobInfo {
     private String position;
     private Boolean remoteWork;
-    private int worker_id;
+    private int workerId;
 
-    public int getWorker_id() {
-        return worker_id;
+    public int getWorkerId() {
+        return workerId;
     }
 
-    public void setWorker_id(int worker_id) {
-        this.worker_id = worker_id;
+    public void setWorkerId(int workerId) {
+        this.workerId = workerId;
     }
 
     public void createTable() {

@@ -1,11 +1,13 @@
 package ru.vorobyov.database.entity;
 
+import java.sql.Date;
+
 public class Worker {
     private int workerId;
     private String preview;
     private String name;
     private String lastName;
-    private String birthday;
+    private Date birthday;
     private int age;
     private String address;
 
@@ -41,11 +43,11 @@ public class Worker {
         this.lastName = lastName;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

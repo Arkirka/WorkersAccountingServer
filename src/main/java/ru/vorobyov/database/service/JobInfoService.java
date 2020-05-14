@@ -3,12 +3,11 @@ package ru.vorobyov.database.service;
 import ru.vorobyov.database.bl.DatabaseUtil;
 import ru.vorobyov.database.dao.JobInfoDAO;
 import ru.vorobyov.database.entity.JobInfo;
+import ru.vorobyov.database.entity.Worker;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobInfoService implements JobInfoDAO {
@@ -29,7 +28,7 @@ public class JobInfoService implements JobInfoDAO {
 
             preparedStatement.setString(1, jobInfo.getPosition());
             preparedStatement.setBoolean(2, jobInfo.getRemoteWork());
-            preparedStatement.setInt(3, jobInfo.getWorker_id());
+            preparedStatement.setInt(3, jobInfo.getWorkerId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -53,8 +52,37 @@ public class JobInfoService implements JobInfoDAO {
     }
 
     @Override
-    public List<JobInfo> getAll() {
-        return null; //TODO if needed
+    public List<JobInfo> getAll() throws SQLException {
+        List<JobInfo> jobInfoList = new ArrayList<>();
+
+        String sql = "SELECT POSITION , REMOTEWORK, WORKER_ID FROM JOBINFO";
+
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                JobInfo jobInfo = new JobInfo();
+
+               jobInfo.setPosition(resultSet.getString("POSITION"));
+               jobInfo.setRemoteWork(resultSet.getBoolean("REMOTEWORK"));
+               jobInfo.setWorkerId(resultSet.getInt("WORKER_ID"));
+
+                jobInfoList.add(jobInfo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return jobInfoList;
     }
 
     @Override
@@ -73,7 +101,7 @@ public class JobInfoService implements JobInfoDAO {
 
             preparedStatement.setString(1, jobInfo.getPosition());
             preparedStatement.setBoolean(2, jobInfo.getRemoteWork());
-            preparedStatement.setInt(3, jobInfo.getWorker_id());
+            preparedStatement.setInt(3, jobInfo.getWorkerId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -105,7 +133,7 @@ public class JobInfoService implements JobInfoDAO {
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setInt(1, jobInfo.getWorker_id());
+            preparedStatement.setInt(1, jobInfo.getWorkerId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

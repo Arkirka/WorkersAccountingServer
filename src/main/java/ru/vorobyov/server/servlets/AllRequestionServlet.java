@@ -19,11 +19,11 @@ public class AllRequestionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("message", "");
+        pageVariables.put("name", "Denis");
 
-        response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+        response.getWriter().println(PageGenerator.instance().getPage("page.ftl", pageVariables));
 
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType("encoding;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
 
     }

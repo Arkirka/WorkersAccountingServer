@@ -5,10 +5,8 @@ import ru.vorobyov.database.dao.WorkerDAO;
 import ru.vorobyov.database.entity.Worker;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkerService implements WorkerDAO {
@@ -29,7 +27,7 @@ public class WorkerService implements WorkerDAO {
             preparedStatement.setString(1, worker.getPreview());
             preparedStatement.setString(2, worker.getName());
             preparedStatement.setString(3, worker.getLastName());
-            preparedStatement.setString(4, worker.getBirthday());
+            preparedStatement.setDate(4, worker.getBirthday());
             preparedStatement.setInt(5, worker.getAge());
             preparedStatement.setString(6, worker.getAddress());
 
@@ -55,8 +53,41 @@ public class WorkerService implements WorkerDAO {
     }
 
     @Override
-    public List<Worker> getAll() {
-        return null; //TODO if needed
+    public List<Worker> getAll() throws SQLException {
+        List<Worker> workersList = new ArrayList<>();
+
+        String sql = "SELECT WORKER_ID, PREVIEW, NAME, LASTNAME, BIRTHDAY, AGE, ADDRESS FROM WORKER";
+
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Worker worker = new Worker();
+
+                worker.setWorkerId(resultSet.getInt("WORKER_ID"));
+                worker.setPreview(resultSet.getString("PREVIEW"));
+                worker.setName(resultSet.getString("NAME"));
+                worker.setLastName(resultSet.getString("LASTNAME"));
+                worker.setBirthday(resultSet.getDate("BIRTHDAY"));
+                worker.setAge(resultSet.getInt("AGE"));
+                worker.setAddress(resultSet.getString("ADDRESS"));
+
+                workersList.add(worker);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return workersList;
     }
 
     @Override
@@ -76,7 +107,7 @@ public class WorkerService implements WorkerDAO {
             preparedStatement.setString(1, worker.getPreview());
             preparedStatement.setString(2, worker.getName());
             preparedStatement.setString(3, worker.getLastName());
-            preparedStatement.setString(4, worker.getBirthday());
+            preparedStatement.setDate(4, worker.getBirthday());
             preparedStatement.setInt(5, worker.getAge());
             preparedStatement.setString(6, worker.getAddress());
             preparedStatement.setInt(7, worker.getWorkerId());

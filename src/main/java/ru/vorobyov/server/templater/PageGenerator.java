@@ -1,9 +1,13 @@
 package ru.vorobyov.server.templater;
 
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.WebappTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import ru.vorobyov.server.servlets.AllRequestionServlet;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -17,11 +21,13 @@ public class PageGenerator {
     private static PageGenerator pageGenerator;
     private final Configuration cfg;
 
-    public PageGenerator() {
+    public PageGenerator() throws IOException {
         cfg = new Configuration();
+        FileTemplateLoader fileTemplateLoader = new FileTemplateLoader(new File("src/main/webapp/templates"));
+        cfg.setTemplateLoader(fileTemplateLoader);
     }
 
-    public static PageGenerator instance() {
+    public static PageGenerator instance() throws IOException {
         if (pageGenerator == null)
             pageGenerator = new PageGenerator();
         return pageGenerator;
@@ -30,7 +36,7 @@ public class PageGenerator {
     public String getPage(String filename, Map<String, Object> data) {
         Writer stream = new StringWriter();
         try {
-            Template template = cfg.getTemplate(htmlDir + File.separator + filename);
+            Template template = cfg.getTemplate(File.separator + filename);
             template.process(data, stream);
         } catch (IOException | TemplateException e) {
             e.printStackTrace();

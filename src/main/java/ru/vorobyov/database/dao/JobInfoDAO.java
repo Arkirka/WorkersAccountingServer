@@ -11,7 +11,7 @@ public interface JobInfoDAO {
     void add(JobInfo jobInfo);
 
     //read
-    List<JobInfo> getAll() ;
+    List<JobInfo> getAll() throws SQLException;
 
     JobInfo getByAddressId(int id);
 

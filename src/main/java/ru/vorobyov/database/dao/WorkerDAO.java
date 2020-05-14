@@ -11,7 +11,7 @@ public interface WorkerDAO {
     void add(Worker worker);
 
     //read
-    List<Worker> getAll() ;
+    List<Worker> getAll() throws SQLException;
 
     Worker getByAddressId(int id);
 
